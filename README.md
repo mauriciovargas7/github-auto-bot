@@ -48,3 +48,37 @@ O bot executa três etapas principais:
 ---
 
 ## 📁 Estrutura esperada
+
+📁 GIT-HUB/
+└── repositorios/
+├── script.py
+├── repo1/
+├── repo2/
+├── repo3/
+
+
+👉 O script deve ficar na pasta onde estão os repositórios
+
+---
+
+## 💻 Script de sincronização
+
+```python
+import os
+
+PASTA_DESTINO = os.getcwd()
+
+for repo in os.listdir(PASTA_DESTINO):
+    caminho = os.path.join(PASTA_DESTINO, repo)
+
+    if os.path.isdir(os.path.join(caminho, ".git")):
+        print(f"📤 Enviando {repo}...")
+
+        os.system(f'cd "{caminho}" && git add .')
+        os.system(f'cd "{caminho}" && git commit -m "Auto update"')
+        os.system(f'cd "{caminho}" && git push')
+
+    else:
+        print(f"❌ {repo} não é um repositório git")
+
+print("✔ Todos os repositórios enviados!")
